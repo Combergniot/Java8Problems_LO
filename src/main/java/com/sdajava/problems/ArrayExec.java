@@ -3,6 +3,7 @@ package com.sdajava.problems;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.AbstractMap.SimpleEntry;
 
 import static java.util.stream.Collectors.toList;
 
@@ -68,6 +69,18 @@ public class ArrayExec {
     public static <T> List<T> duplicate(final List<T> list, final int times) {
         return list.stream().flatMap(e -> Collections.nCopies(times, e)
             .stream()).collect(toList());
+    }
+
+    public static <T> List<T> dropEveryNth(final List<T> list, final int times){
+        return IntStream.range(0, list.size())
+                        .filter(n -> (n+1) % times != 0)
+                        .mapToObj(list::get)
+                        .collect(Collectors.toList());
+    }
+
+    public static <T> List<T> insertAt(List<T> list, int pos, T t){
+        list.add((pos-1), t);
+        return list;
     }
 
 
