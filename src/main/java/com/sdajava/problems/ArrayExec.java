@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.AbstractMap.SimpleEntry;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -83,5 +84,14 @@ public class ArrayExec {
         return list;
     }
 
+    public static <T> List<T> decode(List<Object> encoded) {
+        return encoded.stream().flatMap(e -> {
+            if (e instanceof SimpleEntry) {
+                SimpleEntry<Integer, T> entry = (SimpleEntry<Integer, T>) e;
+                return Collections.nCopies(entry.getKey(), entry.getValue()).stream();
+            }
+            return Stream.of((T) e);
+        }).collect(toList());
+    }
 
 }
